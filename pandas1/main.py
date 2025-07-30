@@ -1,0 +1,18 @@
+import pandas as pd
+df=pd.read_csv('salaries_by_college_major.csv')
+#print(df.head())
+#print(df.shape)
+#print(df.isna())
+#print(df.tail())
+clean_data=df.dropna()
+#print(clean_data.columns)
+#print(clean_data['Starting Median Salary'].max())
+#print(clean_data.loc[clean_data['Mid-Career Median Salary'].idxmax()])
+#print(clean_data.loc[clean_data['Mid-Career Median Salary'].idxmin()])
+#print(clean_data.loc[clean_data['Starting Median Salary'].idxmin()])
+dif=clean_data['Mid-Career 90th Percentile Salary'] - clean_data['Mid-Career 10th Percentile Salary']
+clean_data.insert(5,'Spread',dif)
+print(clean_data.head())
+clean_data=clean_data.sort_values('Spread',ascending=False)
+print(clean_data[['Undergraduate Major', 'Spread']].head())
+print(clean_data[['Starting Median Salary', 'Mid-Career Median Salary', 'Mid-Career 10th Percentile Salary', 'Mid-Career 90th Percentile Salary', 'Spread', 'Group']].groupby('Group').mean())
